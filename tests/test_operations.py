@@ -1,91 +1,181 @@
-"""This module contains unit tests for mathematical operations."""
-from app.commands.__init__ import Command
-from app.commands.addition import AddCommand
-from app.commands.subtraction import SubtractCommand
-from app.commands.multiplication import MultiplyCommand
-from app.commands.division import DivideCommand
+"""Tests for arithmetic operations, CalculatorCommand error handling, and CommandHandler methods."""
 
-def test_addition_command(capfd):
-    """Tests the addition command."""
-    command = AddCommand()
-    command.execute("5", "3")
-    out, _ = capfd.readouterr()
-    assert out.strip() == "Result: 8.0", "Addition command failed"
+import pkgutil
+import importlib
+from app.plugins.calculator.add import Add
+from app.plugins.calculator.subtract import Subtract
+from app.plugins.calculator.multiply import Multiply
+from app.plugins.calculator.divide import Divide
+from app.plugins.calculator.__init__ import CalculatorCommand
+from app.commands import Command, CommandHandler
 
-def test_subtraction_command(capfd):
-    """Tests the subtraction command."""
-    command = SubtractCommand()
-    command.execute("5", "3")
-    out, _ = capfd.readouterr()
-    assert out.strip() == "Result: 2.0", "Subtraction command failed"
+class DummyCommand(Command):
+    """A dummy command for testing CommandHandler."""
+    def execute(self):
+        """Execute the dummy command."""
+        print("Dummy executed")
+    def execute1(self):
+        """Execute dummy command"""
+        print("Dummy executed")
 
-def test_multiplication_command(capfd):
-    """Tests the multiplication command."""
-    command = MultiplyCommand()
-    command.execute("5", "3")
-    out, _ = capfd.readouterr()
-    assert out.strip() == "Result: 15.0", "Multiplication command failed"
+class DummyOperation(Command):
+    """A dummy operation for testing invalid selection in CalculatorCommand."""
+    def execute(self):
+        """Execute the dummy operation."""
+        print("Dummy operation executed")
+    def execute1(self):
+        """Execute dummy command"""
+        print("Dummy executed")
+# pylint: disable=too-few-public-methods
+class DummyBareCommand(Command):
+    """A dummy bare command to test the base Command.execute method."""
+DummyBareCommand.__abstractmethods__ = set()
 
-def test_division_command(capfd):
-    """Tests the division command."""
-    command = DivideCommand()
-    command.execute("6", "3")
-    out, _ = capfd.readouterr()
-    assert out.strip() == "Result: 2.0", "Division command failed"
-
-def test_division_by_zero_command(capfd):
-    """Tests division by zero handling."""
-    command = DivideCommand()
-    command.execute("6", "0")
-    out, _ = capfd.readouterr()
-    assert ("Error: Division by zero is not allowed."
-            in out ), "Division by zero error handling failed"
-
-def test_command_execute_called(capfd):
-    """Tests that calling execute() on Command's subclass triggers the method."""
-    class TestCommand(Command):
-        """A test implementation of the abstract Command class."""
-        def execute(self, *args):
-            """Dummy execute method for testing."""
-            print("Executing abstract Command")
-        def dummy_method(self):
-            """A placeholder method to satisfy Pylint."""
-    test_command = TestCommand()
-    test_command.execute()
+def test_add_valid(capfd, monkeypatch):
+    """Test Add command with valid inputs."""
+    inputs = iter(['2', '3'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    Add().execute()
     captured = capfd.readouterr()
-    assert "Executing abstract Command" in captured.out
+    assert "The result is 5.0" in captured.out
 
-def test_addition_invalid_input(capfd):
-    """Tests the addition command with invalid input to trigger ValueError."""
-    command = AddCommand()
-    command.execute("5", "invalid")
-    out, _ = capfd.readouterr()
-    assert "Error: Please provide valid numbers for addition." in out
+def test_add_invalid(capfd, monkeypatch):
+    """Test Add command with invalid input."""
+    inputs = iter(['abc', '3'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    Add().execute()
+    captured = capfd.readouterr()
+    assert "Invalid input. Please enter numeric values." in captured.out
 
-def test_subtraction_invalid_input(capfd):
-    """Tests the subtraction command with invalid input to trigger ValueError."""
-    command = SubtractCommand()
-    command.execute("10", "invalid")
-    out, _ = capfd.readouterr()
-    assert "Error: Please provide valid numbers for subtraction." in out
+def test_subtract_valid(capfd, monkeypatch):
+    """Test Subtract command with valid inputs."""
+    inputs = iter(['10', '4'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    Subtract().execute()
+    captured = capfd.readouterr()
+    assert "The result is 6.0" in captured.out
 
-def test_multiplication_invalid_input(capfd):
-    """Tests the multiplication command with invalid input to trigger ValueError."""
-    command = MultiplyCommand()
-    command.execute("6", "invalid")
-    out, _ = capfd.readouterr()
-    assert "Error: Please provide valid numbers for multiplication." in out
+def test_subtract_invalid(capfd, monkeypatch):
+    """Test Subtract command with invalid input."""
+    inputs = iter(['xyz', '2'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    Subtract().execute()
+    captured = capfd.readouterr()
+    assert "Invalid input. Please enter numeric values." in captured.out
 
-def test_division_by_zero(capfd):
-    """Tests division by zero to trigger error handling."""
-    command = DivideCommand()
-    command.execute("10", "0")
-    out, _ = capfd.readouterr()
-    assert "Error: Division by zero is not allowed." in out
+def test_multiply_valid(capfd, monkeypatch):
+    """Test Multiply command with valid inputs."""
+    inputs = iter(['3', '4'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    Multiply().execute()
+    captured = capfd.readouterr()
+    assert "The result is 12.0" in captured.out
 
-def test_division_invalid_input(capfd):
-    """Tests the division command with invalid input to trigger ValueError."""
-    command = DivideCommand()
-    command.execute("10", "invalid")
-    out, _ = capfd.readouterr()
-    assert "Error: Please provide valid numbers for division." in out
+def test_multiply_invalid(capfd, monkeypatch):
+    """Test Multiply command with invalid input."""
+    inputs = iter(['foo', '5'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    Multiply().execute()
+    captured = capfd.readouterr()
+    assert "Invalid input. Please enter numeric values." in captured.out
+
+def test_divide_valid(capfd, monkeypatch):
+    """Test Divide command with valid inputs."""
+    inputs = iter(['9', '3'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    Divide().execute()
+    captured = capfd.readouterr()
+    assert "The result is 3.0" in captured.out
+
+def test_divide_by_zero(capfd, monkeypatch):
+    """Test Divide command with division by zero."""
+    inputs = iter(['5', '0'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    Divide().execute()
+    captured = capfd.readouterr()
+    assert "Error: Division by zero." in captured.out
+
+def test_divide_invalid(capfd, monkeypatch):
+    """Test Divide command with invalid input."""
+    inputs = iter(['7', 'abc'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    Divide().execute()
+    captured = capfd.readouterr()
+    assert "Invalid input. Please enter numeric values." in captured.out
+
+def test_calculator_load_operations_error(capfd, monkeypatch):
+    """Test error handling in CalculatorCommand.load_operations when import fails."""
+    def fake_iter_modules(_paths):
+        yield (None, "bad_plugin", False)
+    monkeypatch.setattr(pkgutil, 'iter_modules', fake_iter_modules)
+    def fake_import_module(name):
+        raise ImportError("Fake import error")
+    monkeypatch.setattr(importlib, 'import_module', fake_import_module)
+    calc_cmd = CalculatorCommand()
+    _ = calc_cmd.load_operations()
+    captured = capfd.readouterr()
+    assert "Error loading plugin bad_plugin:" in captured.out
+
+def test_calculator_load_operations_skip_pkg(capfd, monkeypatch):
+    """Test that CalculatorCommand.load_operations skips entries that are packages."""
+    def fake_iter_modules(_paths):
+        yield (None, "folder_plugin", True)
+    monkeypatch.setattr(pkgutil, 'iter_modules', fake_iter_modules)
+    calc_cmd = CalculatorCommand()
+    ops = calc_cmd.load_operations()
+    assert not ops
+    captured = capfd.readouterr()
+    assert not captured.out
+
+def test_calculator_execute_invalid_selection(capfd, monkeypatch):
+    """Test that CalculatorCommand.execute prints 'Invalid selection.' for an invalid input."""
+    monkeypatch.setattr(CalculatorCommand, "load_operations", lambda self: {"1": DummyOperation()})
+    calc_cmd = CalculatorCommand()
+    monkeypatch.setattr('builtins.input', lambda _: "2")
+    calc_cmd.execute()
+    captured = capfd.readouterr()
+    assert "Invalid selection." in captured.out
+
+def test_execute_unknown_command(capfd):
+    """Test CommandHandler.execute_command with a nonexistent command."""
+    handler = CommandHandler()
+    handler.execute_command("nonexistent")
+    captured = capfd.readouterr()
+    assert "No such command: nonexistent" in captured.out
+
+def test_list_commands(capfd):
+    """Test CommandHandler.list_commands prints registered commands."""
+    handler = CommandHandler()
+    handler.register_command("dummy", DummyCommand())
+    handler.list_commands()
+    captured = capfd.readouterr()
+    assert "1. dummy" in captured.out
+
+def test_get_command_by_index_valid():
+    """Test CommandHandler.get_command_by_index returns a valid command name."""
+    handler = CommandHandler()
+    handler.register_command("dummy", DummyCommand())
+    command_name = handler.get_command_by_index(0)
+    assert command_name == "dummy"
+
+def test_get_command_by_index_invalid():
+    """Test CommandHandler.get_command_by_index returns None for an invalid index."""
+    handler = CommandHandler()
+    handler.register_command("dummy", DummyCommand())
+    command_name = handler.get_command_by_index(1)
+    assert command_name is None
+
+def test_dummy_command_execute(capfd):
+    """Test that calling execute on DummyCommand prints the expected message."""
+    d = DummyCommand()
+    #pylint: disable=abstract-class-instantiated
+    d.execute()
+    captured = capfd.readouterr()
+    assert "Dummy executed" in captured.out
+
+def test_command_execute_pass():
+    """Test that the base Command.execute (via DummyBareCommand) returns None."""
+    #pylint: disable=abstract-class-instantiated
+    cmd = DummyBareCommand()
+    result = cmd.execute()
+    assert result is None
