@@ -1,41 +1,32 @@
-"""This module contains tests for the application."""
+"""Tests for the main App behavior."""
+
 import pytest
 from app import App
 
-def test_app_start_exit_command(monkeypatch):
-    """Test that the REPL exits correctly on 'exit' command."""
-    # Simulate user entering 'exit'
-    monkeypatch.setattr('builtins.input', lambda _: 'exit')
+@pytest.mark.parametrize(
+    "inputs, expected_substring",
+    [
+        (["", "2"], "Please enter a valid number."),
+        (["abc", "2"], "Invalid input. Please enter a number."),
+        (["999", "2"], "Invalid choice."),
+    ]
+)
+def test_app_unknown_command(capfd, monkeypatch, inputs, expected_substring):
+    """Check invalid inputs then exit."""
+    input_iter = iter(inputs)
+    monkeypatch.setattr('builtins.input', lambda _: next(input_iter))
     app = App()
-    with pytest.raises(SystemExit) as e:
-        app.start()
-    assert e.type == SystemExit
+    app.start()
+    captured = capfd.readouterr()
+    assert expected_substring in captured.out
+    assert "Program finished." in captured.out
 
-def test_app_start_unknown_command(capfd, monkeypatch):
-    """Test how the REPL handles an unknown command before exiting."""
-    # Simulate user entering an unknown command followed by 'exit'
-    inputs = iter(['unknown_command', 'exit'])
+def test_app_calculator_and_exit(capfd, monkeypatch):
+    """Test normal flow: pick calculator, do an Add, then pick exit."""
+    inputs = iter(['1', '1', '5', '3', '2'])
     monkeypatch.setattr('builtins.input', lambda _: next(inputs))
     app = App()
-    with pytest.raises(SystemExit):
-        app.start()
-
-    # Optionally, check for specific exit code or message
-    # assert excinfo.value.code == expected_exit_code
-
-    # Verify that the unknown command was handled as expected
+    app.start()
     captured = capfd.readouterr()
-    assert "No such command: unknown_command" in captured.out
-
-def test_app_ignore_empty_input(capfd, monkeypatch):
-    """Tests that the app ignores empty input and does not crash."""
-    inputs = iter(["", "exit"])  # Simulates user pressing Enter, then exiting
-    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
-
-    app = App()
-
-    with pytest.raises(SystemExit):
-        app.start()
-
-    captured = capfd.readouterr()
-    assert "Type 'exit' to exit." in captured.out
+    assert "The result is 8" in captured.out
+    assert "Program finished." in captured.out
