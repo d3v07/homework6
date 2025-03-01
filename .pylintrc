@@ -1,0 +1,21 @@
+[MESSAGES CONTROL]
+disable=
+    trailing-whitespace,
+    multiple-statements,
+    missing-class-docstring,
+    missing-function-docstring,
+    too-few-public-methods,
+    condition-evals-to-constant,
+    broad-exception-raised,
+    wrong-import-order,
+    unused-import,
+    redefined-outer-name,
+    import-outside-toplevel,
+    useless-parent-delegation
+    line-too-long,
+    trailing-newlines,
+    unused-argument,
+    reimported,
+    function-redefined,
+    use-implicit-booleaness-not-comparison
+    
