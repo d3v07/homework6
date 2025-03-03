@@ -87,4 +87,3 @@ docs/_build/
 *.sublime-workspace
 
 .env
-logs/
