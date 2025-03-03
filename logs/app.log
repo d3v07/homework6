@@ -1,0 +1,86 @@
+2025-02-27 20:03:04,694 - INFO - Test logging configured.
+2025-02-27 20:03:04,696 - INFO - Environment variables loaded.
+2025-02-27 20:03:04,696 - INFO - Logging configured correctly.
+2025-02-27 20:03:04,696 - INFO - CommandHandler initialized.
+2025-02-27 20:03:04,697 - INFO - Loaded calculator operation: add
+2025-02-27 20:03:04,698 - INFO - Loaded calculator operation: subtract
+2025-02-27 20:03:04,698 - INFO - Loaded calculator operation: multiply
+2025-02-27 20:03:04,699 - INFO - Loaded calculator operation: divide
+2025-02-27 20:03:04,699 - INFO - Command 'calculator' registered.
+2025-02-27 20:03:04,700 - INFO - Command 'discord' registered.
+2025-02-27 20:03:04,700 - INFO - Command 'email' registered.
+2025-02-27 20:03:04,701 - INFO - Command 'exit' registered.
+2025-02-27 20:03:04,701 - INFO - Command 'goodbye' registered.
+2025-02-27 20:03:04,702 - INFO - Command 'greet' registered.
+2025-02-27 20:03:04,702 - INFO - Application starting...
+2025-02-27 20:03:04,702 - INFO - Main loop started.
+2025-02-27 20:03:04,702 - INFO - Listing available commands.
+2025-02-27 20:03:04,702 - INFO - Exiting application via 'exit' command.
+2025-02-27 20:03:04,710 - INFO - Environment variables loaded.
+2025-02-27 20:03:04,710 - INFO - Logging configured correctly.
+2025-02-27 20:03:04,710 - INFO - CommandHandler initialized.
+2025-02-27 20:03:04,728 - INFO - Environment variables loaded.
+2025-02-27 20:03:04,728 - INFO - Logging configured correctly.
+2025-02-27 20:03:04,729 - INFO - CommandHandler initialized.
+2025-02-27 20:03:04,729 - INFO - Loaded calculator operation: add
+2025-02-27 20:03:04,729 - INFO - Loaded calculator operation: subtract
+2025-02-27 20:03:04,729 - INFO - Loaded calculator operation: multiply
+2025-02-27 20:03:04,729 - INFO - Loaded calculator operation: divide
+2025-02-27 20:03:04,729 - INFO - Command 'calculator' registered.
+2025-02-27 20:03:04,729 - INFO - Command 'discord' registered.
+2025-02-27 20:03:04,729 - INFO - Command 'email' registered.
+2025-02-27 20:03:04,730 - INFO - Command 'exit' registered.
+2025-02-27 20:03:04,730 - INFO - Command 'goodbye' registered.
+2025-02-27 20:03:04,730 - INFO - Command 'greet' registered.
+2025-02-27 20:03:04,730 - INFO - Application starting...
+2025-02-27 20:03:04,730 - INFO - Main loop started.
+2025-02-27 20:03:04,730 - INFO - Listing available commands.
+2025-02-27 20:03:04,730 - ERROR - Attempted to access a command by an invalid index.
+2025-02-27 20:03:04,730 - WARNING - Invalid selection. Please enter a valid number.
+2025-02-27 20:03:04,731 - INFO - Listing available commands.
+2025-02-27 20:03:04,731 - INFO - Exiting application via 'exit' command.
+2025-02-27 20:03:04,736 - INFO - Environment variables loaded.
+2025-02-27 20:03:04,737 - INFO - Logging configured correctly.
+2025-02-27 20:03:04,737 - INFO - CommandHandler initialized.
+2025-02-27 20:03:04,737 - INFO - Loaded calculator operation: add
+2025-02-27 20:03:04,737 - INFO - Loaded calculator operation: subtract
+2025-02-27 20:03:04,737 - INFO - Loaded calculator operation: multiply
+2025-02-27 20:03:04,737 - INFO - Loaded calculator operation: divide
+2025-02-27 20:03:04,737 - INFO - Command 'calculator' registered.
+2025-02-27 20:03:04,738 - INFO - Command 'discord' registered.
+2025-02-27 20:03:04,738 - INFO - Command 'email' registered.
+2025-02-27 20:03:04,738 - INFO - Command 'exit' registered.
+2025-02-27 20:03:04,738 - INFO - Command 'goodbye' registered.
+2025-02-27 20:03:04,738 - INFO - Command 'greet' registered.
+2025-02-27 20:03:04,738 - INFO - Application starting...
+2025-02-27 20:03:04,738 - INFO - Main loop started.
+2025-02-27 20:03:04,738 - INFO - Listing available commands.
+2025-02-27 20:03:04,739 - INFO - Executing command 'greet'.
+2025-02-27 20:03:04,739 - INFO - Executing command: greet
+2025-02-27 20:03:04,739 - INFO - Executing GreetCommand.
+2025-02-27 20:03:04,739 - INFO - Listing available commands.
+2025-02-27 20:03:04,739 - INFO - Exiting application via 'exit' command.
+2025-02-27 20:03:04,743 - INFO - Environment variables loaded.
+2025-02-27 20:03:04,743 - INFO - Logging configured correctly.
+2025-02-27 20:03:04,743 - INFO - CommandHandler initialized.
+2025-02-27 20:03:04,743 - INFO - Loaded calculator operation: add
+2025-02-27 20:03:04,743 - INFO - Loaded calculator operation: subtract
+2025-02-27 20:03:04,743 - INFO - Loaded calculator operation: multiply
+2025-02-27 20:03:04,744 - INFO - Loaded calculator operation: divide
+2025-02-27 20:03:04,744 - INFO - Command 'calculator' registered.
+2025-02-27 20:03:04,744 - INFO - Command 'discord' registered.
+2025-02-27 20:03:04,744 - INFO - Command 'email' registered.
+2025-02-27 20:03:04,744 - INFO - Command 'exit' registered.
+2025-02-27 20:03:04,745 - INFO - Command 'goodbye' registered.
+2025-02-27 20:03:04,745 - INFO - Command 'greet' registered.
+2025-02-27 20:03:04,745 - INFO - Application starting...
+2025-02-27 20:03:04,745 - INFO - Main loop started.
+2025-02-27 20:03:04,745 - INFO - Listing available commands.
+2025-02-27 20:03:04,745 - INFO - Executing command 'goodbye'.
+2025-02-27 20:03:04,745 - INFO - Executing command: goodbye
+2025-02-27 20:03:04,745 - INFO - Executing GoodbyeCommand.
+2025-02-27 20:03:04,745 - INFO - Listing available commands.
+2025-02-27 20:03:04,746 - INFO - Exiting application via 'exit' command.
+2025-02-27 20:03:04,749 - INFO - Returning to Main Menu from CalculatorCommand.
+2025-02-27 20:03:04,752 - INFO - Executing calculator operation: MockAddCommand
+2025-02-27 20:03:04,752 - INFO - Returning to Main Menu from CalculatorCommand.
